@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }) {
         <div>Wigs</div>
         <div>
           <Link href="/">Home</Link>
-          <Link href="/products">Products</Link>
+          <Link href="/wigs">Wigs</Link>
           <Link href="/cart">Cart</Link>
         </div>
       </header>
