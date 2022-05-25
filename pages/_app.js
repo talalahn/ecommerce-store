@@ -1,3 +1,4 @@
+import '@fortawesome/fontawesome-free/css/all.css';
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -21,7 +22,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Wigs for Days</title>
+        <title>Beanie Baby for Days</title>
         <meta name="description" content="SEO description content" />
         {/* ICON FOR BROWSER TAB */}
         <link rel="icon" href="/favicon.ico" />
@@ -39,11 +40,16 @@ function MyApp({ Component, pageProps }) {
         `}
       />
       <header css={headerStyles}>
-        <div>Wigs</div>
+        <div>
+          <i className="fa-solid fa-heart" />
+        </div>
         <div>
           <Link href="/">Home</Link>
-          <Link href="/wigs">Wigs</Link>
+          <Link href="/beanie_babies">Beanie Babies</Link>
           <Link href="/cart">Cart</Link>
+        </div>
+        <div>
+          <i className="fa-solid fa-heart" />
         </div>
       </header>
       <Component {...pageProps} />

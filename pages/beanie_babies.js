@@ -1,0 +1,50 @@
+import { css } from '@emotion/react';
+import Link from 'next/link';
+import { beanieBabyDatabase } from '../util/database';
+
+const beanieBabyList = css`
+  background-color: #af9;
+  border: 2px solid #f54;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+  border-radius: 4px;
+
+  > div > a {
+    text-decoration: none;
+    color: black;
+  }
+`;
+
+export default function BeanieBaby(props) {
+  return (
+    <div>
+      <main />
+      {props.beanieBabies.map((beanieBaby) => {
+        return (
+          <div key={`beaniebaby-${beanieBaby.id}`} css={beanieBabyList}>
+            <div>{beanieBaby.name}</div>
+            <div>Color: {beanieBaby.color}</div>
+            <div>Price: {beanieBaby.price}€</div>
+            <div>
+              <Link href={`./beanie_babies/${beanieBaby.id}`}>
+                Click for Details
+              </Link>
+            </div>
+          </div>
+        );
+      })}
+      <footer />
+    </div>
+  );
+}
+
+export function getServerSideProps() {
+  console.log(beanieBabyDatabase);
+  return {
+    props: {
+      beanieBabies: beanieBabyDatabase,
+    },
+  };
+}
