@@ -3,11 +3,12 @@ import Link from 'next/link';
 import { beanieBabyDatabase } from '../util/database';
 
 const beanieBabyList = css`
-  background-color: #af9;
-  border: 2px solid #f54;
+  background-color: #828282;
+  border: 2px solid #d3d3d3;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  width: 100px;
   margin: 16px 0;
   border-radius: 4px;
 

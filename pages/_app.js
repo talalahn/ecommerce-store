@@ -2,10 +2,11 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const headerStyles = css`
   border-radius: 10px;
-  background-color: #f54;
+  background-color: #c9c0bb;
   padding: 20px 10px;
   color: #fff;
   display: flex;
@@ -18,7 +19,30 @@ const headerStyles = css`
   }
 `;
 
+const cookieBannerStyles = (isOpen) => css`
+  height: ${isOpen ? '50px' : 0};
+  overflow: hidden;
+  transition: all ease-in 200ms;
+`;
+
 function MyApp({ Component, pageProps }) {
+  const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
+
+  function cookieBannerButtonHandler() {
+    // 2. set the value for the cookie banner
+    window.localStorage.setItem('areCookiesAccepted', JSON.stringify(true));
+    setAreCookiesAccepted(true);
+  }
+
+  useEffect(() => {
+    // 1. is there a value for the cookie banner?
+    if (window.localStorage.getItem('areCookiesAccepted')) {
+      setAreCookiesAccepted(
+        JSON.stringify(window.localStorage.getItem('areCookiesAccepted')),
+      );
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -39,6 +63,17 @@ function MyApp({ Component, pageProps }) {
           }
         `}
       />
+      <div css={cookieBannerStyles(!areCookiesAccepted)}>
+        Accept Cookies
+        <button
+          onClick={() => {
+            setAreCookiesAccepted(true);
+            cookieBannerButtonHandler();
+          }}
+        >
+          Yes
+        </button>
+      </div>
       <header css={headerStyles}>
         <div>
           <i className="fa-solid fa-heart" />
