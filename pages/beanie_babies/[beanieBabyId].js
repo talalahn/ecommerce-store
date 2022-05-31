@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { getParsedCookies, setStringifiedCookies } from '../../util/cookies';
-import { beanieBabyDatabase } from '../../util/database';
+import { getBeanieBaby } from '../../util/database';
 
 const beanieBabyInfoBox = css`
   background-color: #d3d3d3;
@@ -42,9 +42,11 @@ export default function BeanieBaby(props) {
     props.beanieBaby.cartCounter || 0,
   );
 
-  if (!props.beanieBaby) {
+  if (!props.beanieBaby.price) {
     return <div> Beanie Baby not found</div>;
   }
+
+  // getBeanieBaby(context.query.beanieBabyId);
 
   return (
     <div>
@@ -167,31 +169,38 @@ export default function BeanieBaby(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   // 1. get the value of the  cookie from the request object
   const currentCart = JSON.parse(context.req.cookies.cart || '[]');
   // console.log(currentCart);
 
   // 2. get the id from the url and use it to match the single beanie baby id
-  const foundBeanieBaby = beanieBabyDatabase.find((beanieBaby) => {
-    return beanieBaby.id === context.query.beanieBabyId;
-  });
+  // const foundBeanieBaby = beanieBabyDatabase.find((beanieBaby) => {
+  //   return beanieBaby.id === context.query.beanieBabyId;
+  // });
 
-  if (!foundBeanieBaby) {
-    context.res.statusCode = 404;
-  }
-  // 3. find the object that represents the beanie baby in the url
-  const currentBeanieBabyInCart = currentCart.find(
-    (beanieBabyInCart) => foundBeanieBaby.id === beanieBabyInCart.id,
-  );
+  const beanieBaby = await getBeanieBaby(context.query.beanieBabyId);
+  // console.log(typeof context.query);
 
-  // 4. create a new object adding the properties from the cookie object to the beanie baby in the database
-  const superBeanieBaby = { ...foundBeanieBaby, ...currentBeanieBabyInCart };
-  console.log(superBeanieBaby);
+  // if (typeofbeanieBaby !== object) {
+  //   context.res.statusCode = 404;
+  // }
+
+  // if (beanieBabyId) {
+  //   context.res.statusCode = 404;
+  // }
+  // // 3. find the object that represents the beanie baby in the url
+  // const currentBeanieBabyInCart = currentCart.find(
+  //   (beanieBabyInCart) => foundBeanieBaby.id === beanieBabyInCart.id,
+  // );
+
+  // // 4. create a new object adding the properties from the cookie object to the beanie baby in the database
+  // const superBeanieBaby = { ...foundBeanieBaby, ...currentBeanieBabyInCart };
+  // console.log(superBeanieBaby);
 
   return {
     props: {
-      beanieBaby: superBeanieBaby,
+      beanieBaby: beanieBaby || {}, // used to be superBeanieBaby
     },
   };
 }

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import Link from 'next/link';
-import { beanieBabyDatabase } from '../util/database';
+import { getBeanieBabies } from '../util/database';
 
 const beanieBabyList = css`
   background-color: #828282;
@@ -41,11 +41,13 @@ export default function BeanieBaby(props) {
   );
 }
 
-export function getServerSideProps() {
-  console.log(beanieBabyDatabase);
+export async function getServerSideProps() {
+  const beanieBabies = await getBeanieBabies();
+
+  // console.log(beanieBabyDatabase);
   return {
     props: {
-      beanieBabies: beanieBabyDatabase,
+      beanieBabies: beanieBabies,
     },
   };
 }
