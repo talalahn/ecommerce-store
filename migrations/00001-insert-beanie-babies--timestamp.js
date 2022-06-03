@@ -6,21 +6,25 @@
 
 const beanieBabyDatabase = [
   {
+    id: 1,
     name: 'john',
     color: 'blonde',
     price: '1500',
   },
   {
+    id: 2,
     name: 'jacob',
     color: 'red',
     price: '1200',
   },
   {
+    id: 3,
     name: 'jimmy',
     color: 'black',
     price: '800',
   },
   {
+    id: 4,
     name: 'Honey',
     color: 'brunette',
     price: '600',
