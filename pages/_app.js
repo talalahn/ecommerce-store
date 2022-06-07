@@ -27,7 +27,17 @@ const cookieBannerStyles = (isOpen) => css`
 
 function MyApp({ Component, pageProps }) {
   const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
-
+  console.log(pageProps);
+  // trying something out
+  // const [isInCart, setIsInCart] = useState('cartCounter' in props.beanieBaby);
+  // const [cartCounter, setCartCounter] = useState(
+  //   props.beanieBaby.cartCounter || 0,
+  // );
+  // export function removeFromBasket() {
+  //   setCartCounter(0);
+  //   setIsInCart(false);
+  // }
+  // until here
   function cookieBannerButtonHandler() {
     // 2. set the value for the cookie banner
     window.localStorage.setItem('areCookiesAccepted', JSON.stringify(true));

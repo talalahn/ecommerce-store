@@ -42,11 +42,14 @@ export default function BeanieBaby(props) {
     props.beanieBaby.cartCounter || 0,
   );
 
+  function removeFromBasket() {
+    setIsInCart(false);
+    setCartCounter(0);
+  }
+
   if (!props.beanieBaby.price) {
     return <div> Beanie Baby not found</div>;
   }
-
-  // getBeanieBaby(context.query.beanieBabyId);
 
   return (
     <div>
@@ -77,8 +80,6 @@ export default function BeanieBaby(props) {
               const currentCart = Cookies.get('cart')
                 ? getParsedCookies('cart')
                 : [];
-              console.log(currentCart);
-
               let newCart;
 
               if (
@@ -91,15 +92,17 @@ export default function BeanieBaby(props) {
                   (beanieBabyInCart) =>
                     beanieBabyInCart.id !== props.beanieBaby.id,
                 );
-                setIsInCart(false);
-                setCartCounter(0);
+                // setIsInCart(false);
+                // setCartCounter(0);
+                removeFromBasket();
               } else {
                 // 2. add the value (spread operator)
                 newCart = [
                   ...currentCart,
-                  { id: props.beanieBaby.id, cartCounter: 0 },
+                  { id: props.beanieBaby.id, cartCounter: 1 },
                 ];
                 setIsInCart(true);
+                setCartCounter(1);
               }
               // 3. set the cookies to the new value
 
@@ -113,7 +116,7 @@ export default function BeanieBaby(props) {
             <>
               <button
                 onClick={() => {
-                  cartCounter > 0
+                  cartCounter > 1
                     ? setCartCounter(cartCounter - 1)
                     : setCartCounter(cartCounter);
 
@@ -170,37 +173,11 @@ export default function BeanieBaby(props) {
 }
 
 export async function getServerSideProps(context) {
-  // 1. get the value of the  cookie from the request object
-  const currentCart = JSON.parse(context.req.cookies.cart || '[]');
-  // console.log(currentCart);
-
-  // 2. get the id from the url and use it to match the single beanie baby id
-  // const foundBeanieBaby = beanieBabyDatabase.find((beanieBaby) => {
-  //   return beanieBaby.id === context.query.beanieBabyId;
-  // });
-
   const beanieBaby = await getBeanieBaby(context.query.beanieBabyId);
-  // console.log(typeof context.query);
-
-  // if (typeofbeanieBaby !== object) {
-  //   context.res.statusCode = 404;
-  // }
-
-  // if (beanieBabyId) {
-  //   context.res.statusCode = 404;
-  // }
-  // // 3. find the object that represents the beanie baby in the url
-  // const currentBeanieBabyInCart = currentCart.find(
-  //   (beanieBabyInCart) => foundBeanieBaby.id === beanieBabyInCart.id,
-  // );
-
-  // // 4. create a new object adding the properties from the cookie object to the beanie baby in the database
-  // const superBeanieBaby = { ...foundBeanieBaby, ...currentBeanieBabyInCart };
-  // console.log(superBeanieBaby);
 
   return {
     props: {
-      beanieBaby: beanieBaby || {}, // used to be superBeanieBaby
+      beanieBaby: beanieBaby || {},
     },
   };
 }

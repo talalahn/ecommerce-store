@@ -18,6 +18,11 @@ const mainContentStyles = css`
   > div > h2 {
     padding-top: 100px;
   }
+
+  > div > h2 > a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 const homepageImageStyles = css`
@@ -29,18 +34,11 @@ export default function Home() {
   return (
     <div>
       <main css={mainContentStyles}>
-        <Image
-          css={homepageImageStyles}
-          src="/homepage.jpeg"
-          alt="wigs"
-          width="1440"
-          height="1729"
-        />
-        <div>
-          <h2>
-            <Link href="/beanie_babies">Meet the Beanies</Link>
-          </h2>
-        </div>
+        <Link href="/beanie_babies">
+          <div>
+            <h2>Meet the Beanies</h2>
+          </div>
+        </Link>
       </main>
 
       <footer />

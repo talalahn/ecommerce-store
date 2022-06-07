@@ -3,7 +3,7 @@ exports.up = async (sql) => {
 		CREATE TABLE beanie_babies (
 		id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 		name varchar(20) NOT NULL,
-		color varchar(20) NOT NULL,
+		animal varchar(20) NOT NULL,
 		price integer NOT NULL
 );
 	`;
