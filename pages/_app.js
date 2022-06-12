@@ -1,23 +1,8 @@
 import '@fortawesome/fontawesome-free/css/all.css';
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
-const headerStyles = css`
-  border-radius: 10px;
-  background-color: #c9c0bb;
-  padding: 20px 10px;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-
-  > div > a {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px;
-  }
-`;
+import Layout from '../components/layout';
 
 const cookieBannerStyles = (isOpen) => css`
   height: ${isOpen ? '50px' : 0};
@@ -43,6 +28,7 @@ function MyApp({ Component, pageProps }) {
     window.localStorage.setItem('areCookiesAccepted', JSON.stringify(true));
     setAreCookiesAccepted(true);
   }
+  // this is your function you created
 
   useEffect(() => {
     // 1. is there a value for the cookie banner?
@@ -84,20 +70,10 @@ function MyApp({ Component, pageProps }) {
           Yes
         </button>
       </div>
-      <header css={headerStyles}>
-        <div>
-          <i className="fa-solid fa-heart" />
-        </div>
-        <div>
-          <Link href="/">Home</Link>
-          <Link href="/beanie_babies">Beanie Babies</Link>
-          <Link href="/cart">Cart</Link>
-        </div>
-        <div>
-          <i className="fa-solid fa-heart" />
-        </div>
-      </header>
-      <Component {...pageProps} />
+
+      <Layout {...pageProps} cartTotal={pageProps.cartTotal}>
+        <Component {...pageProps} />
+      </Layout>
     </>
   );
 }

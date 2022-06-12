@@ -4,9 +4,10 @@ import Link from 'next/link';
 
 const mainContentStyles = css`
   margin: 10px;
+  /* background-image: url('/../public/groupBeanies.jpg'); */
 
   > div {
-    color: gray;
+    color: grey;
     font-size: 20px;
     border-radius: 50%;
     width: 300px;
@@ -14,6 +15,9 @@ const mainContentStyles = css`
     text-justify: center;
     text-align: center;
     border: 2px grey solid;
+    justify-items: center;
+    display: block;
+    margin: auto;
   }
   > div > h2 {
     padding-top: 100px;
@@ -21,13 +25,7 @@ const mainContentStyles = css`
 
   > div > h2 > a {
     text-decoration: none;
-    color: inherit;
   }
-`;
-
-const homepageImageStyles = css`
-  border-radius: 4px;
-  filter: grayscale();
 `;
 
 export default function Home() {
