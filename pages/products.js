@@ -2,6 +2,10 @@ import { css } from '@emotion/react';
 import Link from 'next/link';
 import { getBeanieBabies } from '../util/database';
 
+const headingTextStyles = css`
+  margin: 0 auto;
+  text-align: center;
+`;
 const beanieBabyListStyles = css`
   background-color: #828282;
   border: 2px solid #d3d3d3;
@@ -38,12 +42,17 @@ const singleProductStyles = css`
 export default function BeanieBaby(props) {
   return (
     <div>
+      <h1 css={headingTextStyles}>The Beanies:</h1>
       <div css={beanieBabyListStyles}>
         <main />
+
         {props.beanieBabies.map((beanieBaby) => {
           return (
             <>
-              <Link href={`./beanie_babies/${beanieBaby.id}`}>
+              <Link
+                data-test-id="product-<beanieBaby.id>"
+                href={`./products/${beanieBaby.id}`}
+              >
                 <div
                   key={`beaniebaby-${beanieBaby.id}`}
                   css={singleProductStyles}

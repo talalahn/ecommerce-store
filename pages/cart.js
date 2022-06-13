@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { callbackify } from 'util';
 import { getBeanieBabies } from '../util/database';
-import BeanieBaby from './beanie_babies/[beanieBabyId]';
+import BeanieBaby from './products/[beanieBabyId]';
 
 const cartBoxStyles = css`
   width: 80vw;
@@ -42,9 +42,10 @@ const buttonStyles = css`
   color: black;
   padding: 10px;
   font-weight: bold;
-  border: 2px solid black;
+  font-size: 16px;
+  border: 1px solid black;
   border-radius: 10px;
-  width: 50px;
+  /* width: 50px; */
   transition: all 0.2s linear 0s;
   box-shadow: 2px 2px;
   :hover {
@@ -70,6 +71,11 @@ const buttonStyles = css`
     box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
     transform: translateY(0.25em);
     transition: 0.3s;
+  }
+  @keyframes slide {
+    to {
+      background-position: 20vw;
+    }
   }
 `;
 
@@ -99,6 +105,32 @@ export default function Cart(props) {
     }).price;
   });
 
+  const currentQuantityArray = props.currentCart.map((cartItem) => {
+    return cartItem.cartCounter;
+  });
+
+  const currentSubtotalPriceArray = currentQuantityArray.reduce(function (
+    r,
+    a,
+    i,
+  ) {
+    return r + a * currentPriceArray[i];
+  },
+  0);
+
+  function checkId(id) {
+    return (
+      id !==
+      props.currentCart.map((cartItem) => {
+        return cartItem.id;
+      })
+    );
+  }
+
+  function removeFromBasket() {
+    return props.currentCart.filter(checkId);
+  }
+
   // const currentSubtotalPriceArray = props.currentCart.map((cartItem) => {
   //   return props.items.find((item) => {
   //     return multiply(cartItem.cartCounter, (cartItem.id === item.id).price);
@@ -127,24 +159,26 @@ export default function Cart(props) {
             <th>Total</th>
             <th></th>
             <th></th>
+            <th data-test-id="cart-total">{currentSubtotalPriceArray}</th>
             <th>
-              {/* {currentSubtotalPriceArray.reduce(
-                (preValue, curValue) => preValue + curValue,
-                0,
-              )} */}
-              {/* {console.log(currentSubtotalPriceArray)} */}
-            </th>
-            <th>
-              {' '}
-              {/* <button css={buttonStyles}>
-                <i className="fa-solid fa-trash-can"></i> All{' '}
-              </button> */}
+              <button
+                css={buttonStyles}
+                // onClick={() => {
+                //   ;
+                // }}
+              >
+                {' '}
+                <i className="fa-solid fa-trash-can"></i>All
+              </button>
             </th>
           </tfoot>
           <tbody>
             {props.currentCart.map((cartItem) => {
               return (
-                <tr key={`cart-${cartItem.id}`}>
+                <tr
+                  key={`cart-${cartItem.id}`}
+                  data-test-id={`cart-product-${cartItem.id}`}
+                >
                   <td>
                     {
                       props.items.find((item) => {
@@ -160,7 +194,22 @@ export default function Cart(props) {
                     }
                   </td>
 
-                  <td>{cartItem.cartCounter}</td>
+                  <td>
+                    <button css={buttonStyles} onClick={() => {}}>
+                      -
+                    </button>
+                    <span data-test-id={`cart-product-quantity-${cartItem.id}`}>
+                      {cartItem.cartCounter}
+                    </span>
+                    <button
+                      css={buttonStyles}
+                      // onClick={() => {
+                      //   ;
+                      // }}
+                    >
+                      +
+                    </button>
+                  </td>
                   <td>
                     {multiply(
                       cartItem.cartCounter,
@@ -168,10 +217,15 @@ export default function Cart(props) {
                         return cartItem.id === item.id;
                       }).price,
                     )}
-                    {/* how can I make this button call the function removeFromBasket from the [beanieBabyId] page? */}
                   </td>
                   <td>
-                    <button css={buttonStyles}>
+                    <button
+                      data-test-id={`cart-product-remove-${cartItem.id}`}
+                      css={buttonStyles}
+                      // onClick={() => {
+                      //   ;
+                      // }}
+                    >
                       <i className="fa-solid fa-trash-can"></i>
                     </button>
                   </td>
@@ -180,6 +234,11 @@ export default function Cart(props) {
             })}
           </tbody>
         </table>
+        <Link href="/checkout">
+          <button css={buttonStyles} data-test-id="cart-checkout">
+            Buy Now
+          </button>
+        </Link>
       </div>
       <footer />
     </div>
@@ -190,10 +249,6 @@ export async function getServerSideProps(context) {
   const databaseItems = await getBeanieBabies();
   const currentCart = JSON.parse(context.req.cookies.cart || '[]');
   console.log('currentcart', currentCart);
-
-  // click the remove from basket button
-  // -> set props.items.isInCart to false
-  // setCartCounter(0);
 
   return {
     props: {

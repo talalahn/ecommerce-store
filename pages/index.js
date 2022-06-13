@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <div>
       <main css={mainContentStyles}>
-        <Link href="/beanie_babies">
+        <Link href="/products">
           <div>
             <h2>Meet the Beanies</h2>
           </div>

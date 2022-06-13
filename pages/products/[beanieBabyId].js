@@ -29,11 +29,12 @@ const beanieBabyTakeMeBackLink = css`
   color: black;
   padding: 10px;
   font-weight: bold;
-  border: 2px solid black;
+  border: 1px solid black;
   border-radius: 10px;
   width: 130px;
   transition: all 0.2s linear 0s;
   box-shadow: 4px 4px;
+  background-color: #efefef;
 
   :hover {
     z-index: 2;
@@ -102,6 +103,9 @@ const buttonsStyles = css`
     border-radius: 10px;
     box-shadow: 4px 4px;
   }
+  > button :last-of-type {
+    font-size: 16px;
+  }
   > button :hover {
     z-index: 2;
     background-image: linear-gradient(
@@ -149,13 +153,26 @@ export default function BeanieBaby(props) {
   const cartCounter = props.beanieBaby.cartCounter || 0;
 
   if (!props.beanieBaby.price) {
-    return <div> Beanie Baby not found</div>;
+    return (
+      <>
+        <div> Beanie Baby not found</div>
+        <div>
+          {' '}
+          <Link href="/products">
+            <div>
+              <i className="fa-solid fa-backward" /> Take Me Back{'  '}
+              {/* <i className="fa-solid fa-backward" /> */}
+            </div>
+          </Link>
+        </div>
+      </>
+    );
   }
   return (
     <div>
       <div css={beanieBabyInfoBox}>
         <div css={beanieBabyTakeMeBackLink}>
-          <Link href="/beanie_babies">
+          <Link href="/products">
             <div>
               <i className="fa-solid fa-backward" /> Take Me Back{'  '}
               {/* <i className="fa-solid fa-backward" /> */}
@@ -171,9 +188,13 @@ export default function BeanieBaby(props) {
             alt={`beanie baby ${props.beanieBaby.name}`}
             width="500"
             height="500"
+            data-test-id="product-image"
           />
         </div>
-        <h3>Price: {props.beanieBaby.price}</h3>
+        <h3>
+          Price:{' '}
+          <span data-test-id="product-price">{props.beanieBaby.price}€</span>
+        </h3>
 
         <div css={buttonsStyles}>
           <div>
@@ -186,7 +207,7 @@ export default function BeanieBaby(props) {
             >
               -
             </button>
-            <h4>{beanieAmount}</h4>
+            <h4 data-test-id="product-quantity">{beanieAmount}</h4>
             <button
               onClick={() => {
                 setBeanieAmount(beanieAmount + 1);
@@ -197,6 +218,7 @@ export default function BeanieBaby(props) {
           </div>
           <br />
           <button
+            data-test-id="product-add-to-cart"
             onClick={() => {
               // 1. get the original array ( Cookies.get)
 
@@ -255,6 +277,9 @@ export default function BeanieBaby(props) {
           </button>
           <br />
           Total In Cart: {cartTotal}
+          <Link href="/cart">
+            <button>Beanie Basket</button>
+          </Link>
         </div>
       </div>
     </div>

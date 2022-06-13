@@ -42,9 +42,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Beanie Baby for Days</title>
-        <meta name="description" content="SEO description content" />
-        {/* ICON FOR BROWSER TAB */}
+        <title>Buy a Beanie Baby</title>
+        <meta
+          name="description"
+          content="Buy a Beanie Baby is the top online Beanie Baby store for collectors of all ages. Shop for rabbit, bear, dog, and monkey stuffed animals from the 90s."
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Global
