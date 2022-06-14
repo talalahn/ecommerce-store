@@ -57,10 +57,35 @@ const beanieBabyTakeMeBackLink = css`
   }
 `;
 
-const beanieBabyInfoPic = css`
-  border-radius: 50%;
-  filter: grayscale();
+const formStyles = css`
   margin: 0 auto;
+
+  > div > div > label {
+    float: left;
+    text-align: right;
+    margin-right: 15px;
+    width: 120px;
+    margin: 3px;
+  }
+
+  > div > div > input {
+    width: 200px;
+    border: 1px solid black;
+    border-radius: 2px;
+    height: 20px;
+    margin: 3px;
+  }
+
+  > div :nth-child(1) {
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+  }
+  > div :last-child {
+    padding-bottom: 15px;
+  }
 `;
 
 const buttonsStyles = css`
@@ -144,113 +169,114 @@ export default function Checkout() {
           </Link>
         </div>
         <h1>Checkout</h1>
-        <form>
-          <label>
-            First Name:
-            <input
-              data-test-id="checkout-first-name"
-              type="text"
-              required
-              placeholder="Hans"
-            />
-            <br />
-          </label>
-          <label>
-            Last Name:
-            <input
-              data-test-id="checkout-last-name"
-              type="text"
-              required
-              placeholder="Schwarzenegger"
-            />
-            <br />
-          </label>
-          <label>
-            Email:
-            <input
-              data-test-id="checkout-email"
-              type="text"
-              required
-              placeholder="h.schwarzenegger@yahoo.com"
-            />
-            <br />
-          </label>
-          <label>
-            Address:
-            <input
-              data-test-id="checkout-address"
-              type="text"
-              required
-              placeholder="Jungstrasse 27/3/25"
-            />
-            <br />
-          </label>
-          <label>
-            City:
-            <input
-              data-test-id="checkout-city"
-              type="text"
-              required
-              placeholder="Vienna"
-            />
-            <br />
-          </label>
-          <label>
-            Postal Code:
-            <input
-              data-test-id="checkout-postal-code"
-              type="text"
-              required
-              placeholder="1020"
-            />
-            <br />
-          </label>
-          <label>
-            Country:
-            <input
-              data-test-id="checkout-country"
-              type="text"
-              required
-              placeholder="Austria"
-            />
-          </label>
-          <br />
-          <label>
-            Credit Card:
-            <input
-              data-test-id="checkout-credit-card"
-              type="text"
-              required
-              placeholder="xxxx xxxx xxxx xxxx"
-            />
-          </label>
-          <br />
-          <label>
-            Expiration Date:
-            <input
-              data-test-id="checkout-expiration-date"
-              type="text"
-              required
-              placeholder="09/23"
-            />
-          </label>
-          <br />
-          <label>
-            Security Code:
-            <input
-              data-test-id="checkout-security-code"
-              type="text"
-              required
-              placeholder="123"
-            />
-          </label>
-          <br />
+        <form css={formStyles}>
+          <div>
+            <div>
+              <label for="checkout-first-name">First Name:</label>
+              <input
+                id="checkout-first-name"
+                data-test-id="checkout-first-name"
+                type="text"
+                required
+                placeholder="Hans"
+              />
+              <div></div>
+              <label for="checkout-last-name">Last Name:</label>
+              <input
+                data-test-id="checkout-last-name"
+                id="checkout-last-name"
+                type="text"
+                required
+                placeholder="Schwarzenegger"
+              />
+            </div>
+            <div>
+              <label for="checkout-email">Email:</label>
+              <input
+                id="checkout-email"
+                data-test-id="checkout-email"
+                type="text"
+                required
+                placeholder="h.schwarzenegger@yahoo.com"
+              />
+            </div>
+            <div>
+              <label for="checkout-address">Address:</label>
+              <input
+                id="checkout-address"
+                data-test-id="checkout-address"
+                type="text"
+                required
+                placeholder="Jungstrasse 27/3/25"
+              />
+            </div>
+
+            <div>
+              <label for="checkout-city">City:</label>
+              <input
+                id="checkout-city"
+                data-test-id="checkout-city"
+                type="text"
+                required
+                placeholder="Vienna"
+              />
+            </div>
+            <div>
+              <label for="checkout-postal-code">Postal Code:</label>
+              <input
+                id="checkout-postal-code"
+                data-test-id="checkout-postal-code"
+                type="text"
+                required
+                placeholder="1020"
+              />
+            </div>
+            <div>
+              <label for="checkout-country">Country:</label>
+              <input
+                id="checkout-country"
+                data-test-id="checkout-country"
+                type="text"
+                required
+                placeholder="Austria"
+              />
+            </div>
+            <div>
+              <label for="checkout-credit-card">Credit Card:</label>
+              <input
+                id="checkout-credit-card"
+                data-test-id="checkout-credit-card"
+                type="text"
+                required
+                placeholder="xxxx xxxx xxxx xxxx"
+              />
+            </div>
+
+            <div>
+              <label for="checkout-expiration-date">Expiration Date:</label>
+              <input
+                id="checkout-expiration-date"
+                data-test-id="checkout-expiration-date"
+                type="text"
+                required
+                placeholder="09/23"
+              />
+            </div>
+            <div>
+              <label for="checkout-security-code">Security Code:</label>
+              <input
+                id="checkout-security-code"
+                data-test-id="checkout-security-code"
+                type="text"
+                required
+                placeholder="123"
+              />
+            </div>
+          </div>
           <div css={buttonsStyles}>
-            <Link href="/thank_you">
-              <button type="submit" data-test-id="checkout-confirm-order">
-                Submit
-              </button>
-            </Link>
+            <button type="submit" data-test-id="checkout-confirm-order">
+              Submit
+            </button>
           </div>
         </form>
       </div>

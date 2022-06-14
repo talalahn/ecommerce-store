@@ -2,7 +2,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { css, Global } from '@emotion/react';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 
 const cookieBannerStyles = (isOpen) => css`
   height: ${isOpen ? '50px' : 0};

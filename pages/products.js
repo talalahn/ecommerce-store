@@ -7,8 +7,8 @@ const headingTextStyles = css`
   text-align: center;
 `;
 const beanieBabyListStyles = css`
-  background-color: #828282;
-  border: 2px solid #d3d3d3;
+  background-color: #d3d3d3;
+  border: 2px solid #828282;
   /* padding: 10px; */
   display: flex;
   flex-wrap: wrap;
@@ -16,10 +16,15 @@ const beanieBabyListStyles = css`
   border-radius: 4px;
   height: 100vh;
   align-items: stretch;
+  background-color: #d3d3d3;
+  border: 2px solid #828282;
+  padding: 10px;
+  margin: 16px 0;
+  border-radius: 20px;
   /* gap: 5px; */
 `;
 const singleProductStyles = css`
-  background-color: white;
+  background-color: #d3d3d3;
   align-content: center;
   justify-items: center;
   width: 50%;
@@ -30,7 +35,7 @@ const singleProductStyles = css`
 
   > h3,
   h2 {
-    color: gray;
+    color: black;
   }
 
   > h3 > a {
