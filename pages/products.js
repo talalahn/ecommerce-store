@@ -42,6 +42,9 @@ const singleProductStyles = css`
     text-decoration: none;
     color: inherit;
   }
+  #beaniebaby-1 {
+    background-color: black;
+  }
 `;
 
 export default function BeanieBaby(props) {
@@ -60,6 +63,7 @@ export default function BeanieBaby(props) {
               >
                 <div
                   key={`beaniebaby-${beanieBaby.id}`}
+                  id={`beaniebaby-${beanieBaby.id}`}
                   css={singleProductStyles}
                 >
                   <h2>{beanieBaby.name}</h2>

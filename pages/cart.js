@@ -1,9 +1,45 @@
 import { css } from '@emotion/react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { callbackify } from 'util';
+import { getParsedCookies, setStringifiedCookies } from '../util/cookies';
 import { getBeanieBabies } from '../util/database';
-import BeanieBaby from './products/[beanieBabyId]';
+
+const beanieBabyTakeMeBackLink = css`
+  color: black;
+  padding: 10px;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 130px;
+  transition: all 0.2s linear 0s;
+  box-shadow: 4px 4px;
+  background-color: #efefef;
+
+  :hover {
+    z-index: 2;
+    background-image: linear-gradient(
+      to right,
+      #e7484f,
+      #e7484f 16.65%,
+      #f68b1d 16.65%,
+      #f68b1d 33.3%,
+      #fced00 33.3%,
+      #fced00 49.95%,
+      #009e4f 49.95%,
+      #009e4f 66.6%,
+      #00aac3 66.6%,
+      #00aac3 83.25%,
+      #732982 83.25%,
+      #732982 100%,
+      #e7484f 100%
+    );
+    animation: slide 5s linear infinite;
+    animation: slide 5s linear infinite;
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(0.25em);
+    transition: 0.3s;
+  }
+`;
 
 const beanieBabyInfoBox = css`
   background-color: #d3d3d3;
@@ -134,64 +170,38 @@ const tableRowDesign = css`
   padding: 10px;
 `;
 
-const multiply = (num1, num2) => {
-  return num1 * num2;
-};
-
 export default function Cart(props) {
-  if (props.currentCart.length === 0) {
+  const [beanieCart, setBeanieCart] = useState(props.foundBeanies);
+
+  const totalPrice = beanieCart.map((cartItem) => {
+    const beaniePrice = Number(cartItem.price);
+    const beanieCounter = Number(cartItem.cartCounter);
+    const beaniePriceTotal = beaniePrice * beanieCounter;
+    return beaniePriceTotal;
+  });
+
+  function add(accumulator, a) {
+    return accumulator + a;
+  }
+
+  const sum = totalPrice.reduce(add, 0);
+
+  if (beanieCart.length === 0) {
     return (
-      <>
-        {' '}
-        <div> Beanie Basket is empty</div>
-        <Link href="/beanie_babies">
-          <div>
-            <i className="fa-solid fa-heart" />
-            Take me to the beanies!
-            <i className="fa-solid fa-heart" />
+      <div>
+        <div css={beanieBabyInfoBox}>
+          <div css={beanieBabyTakeMeBackLink}>
+            <Link href="/products">
+              <div>
+                <i className="fa-solid fa-backward" /> Take Me Back
+              </div>
+            </Link>
           </div>
-        </Link>
-      </>
+          <h1>Your Beanie Basket Is Empty!</h1>
+        </div>
+      </div>
     );
   }
-  const currentPriceArray = props.currentCart.map((cartItem) => {
-    return props.items.find((item) => {
-      return cartItem.id === item.id;
-    }).price;
-  });
-
-  const currentQuantityArray = props.currentCart.map((cartItem) => {
-    return cartItem.cartCounter;
-  });
-
-  const currentSubtotalPriceArray = currentQuantityArray.reduce(function (
-    r,
-    a,
-    i,
-  ) {
-    return r + a * currentPriceArray[i];
-  },
-  0);
-
-  function checkId(id) {
-    return (
-      id !==
-      props.currentCart.map((cartItem) => {
-        return cartItem.id;
-      })
-    );
-  }
-
-  function removeFromBasket() {
-    return props.currentCart.filter(checkId);
-  }
-
-  // const currentSubtotalPriceArray = props.currentCart.map((cartItem) => {
-  //   return props.items.find((item) => {
-  //     return multiply(cartItem.cartCounter, (cartItem.id === item.id).price);
-  //   });
-  // });
-
   return (
     <div>
       <main />
@@ -214,21 +224,14 @@ export default function Cart(props) {
               <th>Total</th>
               <th></th>
               <th></th>
-              <th data-test-id="cart-total">{currentSubtotalPriceArray}</th>
-              <th>
-                <button
-                  css={buttonSimpleStyles}
-                  // onClick={() => {
-                  //   ;
-                  // }}
-                >
-                  {' '}
-                  <i className="fa-solid fa-trash-can"></i> {'  '}All
-                </button>
-              </th>
+              <th data-test-id="cart-total">{sum}</th>
+              <th></th>
             </tfoot>
             <tbody>
-              {props.currentCart.map((cartItem) => {
+              {beanieCart.map((cartItem) => {
+                const beaniePrice = Number(cartItem.price);
+                const beanieCounter = Number(cartItem.cartCounter);
+                const beaniePriceTotal = beaniePrice * beanieCounter;
                 return (
                   <tr
                     css={tableRowDesign}
@@ -236,22 +239,50 @@ export default function Cart(props) {
                     data-test-id={`cart-product-${cartItem.id}`}
                   >
                     <td>
-                      {
+                      {/* {
                         props.items.find((item) => {
                           return cartItem.id === item.id;
                         }).name
-                      }
+                      } */}
+                      {cartItem.name}
                     </td>
                     <td>
-                      {
+                      {/* {
                         props.items.find((item) => {
                           return cartItem.id === item.id;
                         }).price
-                      }
+                      } */}
+                      {cartItem.price}
                     </td>
 
                     <td>
-                      <button css={buttonSimpleStyles} onClick={() => {}}>
+                      <button
+                        css={buttonSimpleStyles}
+                        onClick={() => {
+                          const newCartCounter =
+                            cartItem.cartCounter > 1
+                              ? cartItem.cartCounter - 1
+                              : 1;
+
+                          const updatedArray = beanieCart.map((total) =>
+                            total.id === cartItem.id
+                              ? { ...total, cartCounter: newCartCounter }
+                              : total,
+                          );
+                          setBeanieCart(updatedArray);
+                          const currentCart = getParsedCookies('cart');
+
+                          const currentBeanie = currentCart.find(
+                            (beanieInCart) => cartItem.id === beanieInCart.id,
+                          );
+                          currentBeanie.cartCounter > 1
+                            ? (currentBeanie.cartCounter -= 1)
+                            : (currentBeanie.cartCounter = 1),
+                            setStringifiedCookies('cart', currentCart);
+                          props.setCartState(updatedArray);
+                        }}
+                      >
+                        {' '}
                         -
                       </button>
                       <span
@@ -261,28 +292,52 @@ export default function Cart(props) {
                       </span>
                       <button
                         css={buttonSimpleStyles}
-                        // onClick={() => {
-                        //   ;
-                        // }}
+                        onClick={() => {
+                          const newCartCounter = cartItem.cartCounter + 1;
+                          const updatedArray = beanieCart.map((total) =>
+                            total.id === cartItem.id
+                              ? { ...total, cartCounter: newCartCounter }
+                              : total,
+                          );
+                          setBeanieCart(updatedArray);
+                          const currentCart = getParsedCookies('cart');
+                          const currentBeanie = currentCart.find(
+                            (beanieInCart) => cartItem.id === beanieInCart.id,
+                          );
+                          currentBeanie.cartCounter += 1;
+                          setStringifiedCookies('cart', currentCart);
+                          props.setCartState(updatedArray);
+                        }}
                       >
                         +
                       </button>
                     </td>
-                    <td>
-                      {multiply(
-                        cartItem.cartCounter,
-                        props.items.find((item) => {
-                          return cartItem.id === item.id;
-                        }).price,
-                      )}
-                    </td>
+                    <td>{beaniePriceTotal}</td>
                     <td>
                       <button
                         data-test-id={`cart-product-remove-${cartItem.id}`}
                         css={buttonSimpleStyles}
-                        // onClick={() => {
-                        //   ;
-                        // }}
+                        onClick={() => {
+                          cartItem.cartCounter = 0;
+                          const updateArray = beanieCart.filter(
+                            (beanieRemove) => beanieRemove.cartCounter !== 0,
+                          );
+
+                          setBeanieCart(updateArray);
+                          const currentCart = getParsedCookies('cart');
+                          const currentBeanie = currentCart.find(
+                            (beanieInCart) => cartItem.id === beanieInCart.id,
+                          );
+
+                          currentBeanie.cartCounter = 0;
+                          const updatedCart = currentCart.filter(
+                            (currentBeanieInCart) =>
+                              currentBeanieInCart.cartCounter !== 0,
+                          );
+
+                          props.setCartState(updatedCart);
+                          setStringifiedCookies('cart', updatedCart);
+                        }}
                       >
                         <i className="fa-solid fa-trash-can"></i>
                       </button>
@@ -305,14 +360,27 @@ export default function Cart(props) {
 }
 
 export async function getServerSideProps(context) {
-  const databaseItems = await getBeanieBabies();
   const currentCart = JSON.parse(context.req.cookies.cart || '[]');
-  console.log('currentcart', currentCart);
+
+  const allBeanies = await getBeanieBabies();
+  const foundBeanies = [];
+
+  for (const beanie of currentCart) {
+    const beanieData = allBeanies.find((beanieItem) => {
+      return beanieItem.id === beanie.id;
+    });
+    if (!beanieData) {
+      context.res.statusCode = 404;
+    }
+
+    const superBeanie = { ...beanieData, ...beanie };
+
+    foundBeanies.push(superBeanie);
+  }
 
   return {
     props: {
-      currentCart,
-      items: databaseItems,
+      foundBeanies,
     },
   };
 }

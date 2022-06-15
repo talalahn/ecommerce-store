@@ -1,8 +1,10 @@
 import '@fortawesome/fontawesome-free/css/all.css';
 import { css, Global } from '@emotion/react';
+import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
+import { getParsedCookies, setStringifiedCookies } from '../util/cookies';
 
 const cookieBannerStyles = (isOpen) => css`
   height: ${isOpen ? '50px' : 0};
@@ -12,23 +14,13 @@ const cookieBannerStyles = (isOpen) => css`
 
 function MyApp({ Component, pageProps }) {
   const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
-  console.log(pageProps);
-  // trying something out
-  // const [isInCart, setIsInCart] = useState('cartCounter' in props.beanieBaby);
-  // const [cartCounter, setCartCounter] = useState(
-  //   props.beanieBaby.cartCounter || 0,
-  // );
-  // export function removeFromBasket() {
-  //   setCartCounter(0);
-  //   setIsInCart(false);
-  // }
-  // until here
+  const [cartState, setCartState] = useState([]);
+
   function cookieBannerButtonHandler() {
     // 2. set the value for the cookie banner
     window.localStorage.setItem('areCookiesAccepted', JSON.stringify(true));
     setAreCookiesAccepted(true);
   }
-  // this is your function you created
 
   useEffect(() => {
     // 1. is there a value for the cookie banner?
@@ -39,6 +31,15 @@ function MyApp({ Component, pageProps }) {
     }
   }, []);
 
+  useEffect(() => {
+    const currentCart = Cookies.get('cart') ? getParsedCookies('cart') : [];
+    setCartState(currentCart);
+  }, []);
+
+  // useEffect(() => {
+  //   setStringifiedCookies('cart', cartState);
+  // }, [cartState]);
+
   return (
     <>
       <Head>
@@ -47,7 +48,7 @@ function MyApp({ Component, pageProps }) {
           name="description"
           content="Buy a Beanie Baby is the top online Beanie Baby store for collectors of all ages. Shop for rabbit, bear, dog, and monkey stuffed animals from the 90s."
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/red-heart.png" />
       </Head>
       <Global
         styles={css`
@@ -73,8 +74,12 @@ function MyApp({ Component, pageProps }) {
         </button>
       </div>
 
-      <Layout {...pageProps} cartTotal={pageProps.cartTotal}>
-        <Component {...pageProps} />
+      <Layout cartState={cartState} setCartState={setCartState}>
+        <Component
+          {...pageProps}
+          cartState={cartState}
+          setCartState={setCartState}
+        />
       </Layout>
     </>
   );

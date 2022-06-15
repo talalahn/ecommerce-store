@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -64,7 +63,7 @@ const beanieBabyTakeMeBackLink = css`
 
 const beanieBabyInfoPic = css`
   border-radius: 50%;
-  filter: grayscale();
+  /* filter: grayscale(); */
   margin: 0 auto;
 `;
 
@@ -141,16 +140,14 @@ export default function BeanieBaby(props) {
   // check if the beanie baby is inside the diet by checking the property cartCounter
 
   // initialize the cartCounter with the value of the cookie or 0
-  const [cartState, setCartState] = useState([]);
-  console.log('this is the cartState', cartState);
-  // getCartTotal();
-  const cartTotal = cartState.reduce((acc, cartItem) => {
-    return acc + cartItem.cartCounter;
-  }, 0);
-  console.log('this is cart total', cartTotal);
+
+  // const cartTotal = cartState.reduce((acc, cartItem) => {
+  //   return acc + cartItem.cartCounter;
+  // }, 0);
+
   const [beanieAmount, setBeanieAmount] = useState(1);
 
-  const cartCounter = props.beanieBaby.cartCounter || 0;
+  // const cartCounter = props.beanieBaby.cartCounter || 0;
 
   if (!props.beanieBaby.price) {
     return (
@@ -222,61 +219,43 @@ export default function BeanieBaby(props) {
             onClick={() => {
               // 1. get the original array ( Cookies.get)
 
-              const currentCart = getParsedCookies('cart');
-              console.log('currentcart', currentCart);
-              let newCart;
+              const currentCart = getParsedCookies('cart')
+                ? getParsedCookies('cart')
+                : [];
+
               const selectedBeanie = currentCart.find(
                 (beanieBabyInCart) =>
                   props.beanieBaby.id === beanieBabyInCart.id,
               );
-              let selectedCart = currentCart.filter(
-                (beanieBabyInCart) =>
-                  beanieBabyInCart.id !== props.beanieBaby.id,
-              );
-
-              // IS IT ALREADY IN COOKIES?
+              setBeanieAmount(1);
               if (selectedBeanie) {
-                // IF ALREADY IN COOKIES -->
-                newCart = [
-                  ...selectedCart,
-                  {
-                    id: props.beanieBaby.id,
-                    cartCounter: (cartCounter += beanieAmount),
-                  },
-                ];
-                console.log('newCart', newCart, selectedBeanie);
-
-                // newCart = currentCart.filter(
-                //   (beanieBabyInCart) =>
-                //     beanieBabyInCart.id !== props.beanieBaby.id,
-                // );
-                setCartState(newCart);
-              }
-              //// 2. add the value (spread operator)
-              else {
-                // IF NOT IN COOKIES -->
-                newCart = [
+                selectedBeanie.cartCounter =
+                  Number(selectedBeanie.cartCounter) + Number(beanieAmount);
+                const newCart = [
                   ...currentCart,
                   {
                     id: props.beanieBaby.id,
                     cartCounter: beanieAmount,
                   },
                 ];
-                setCartState(newCart);
+                setStringifiedCookies('cart', currentCart);
+                props.setCartState(newCart);
+              } else {
+                const newCart = [
+                  ...currentCart,
+                  { id: props.beanieBaby.id, cartCounter: beanieAmount },
+                ];
+
+                setStringifiedCookies('cart', newCart);
+                props.setCartState(newCart);
               }
-              setStringifiedCookies('cart', newCart);
-              console.log(currentCart);
-              console.log(newCart);
-
-              // 3. set the cookies to the new value
-
-              // setStringifiedCookies('cart', newCart);
             }}
           >
             Add to Beanie Basket
           </button>
           <br />
-          Total In Cart: {cartTotal}
+          Total In Cart:
+          {/* {cartTotal} */}
           <Link href="/cart">
             <button>Beanie Basket</button>
           </Link>
@@ -287,7 +266,7 @@ export default function BeanieBaby(props) {
 }
 export async function getServerSideProps(context) {
   const beanieBaby = await getBeanieBaby(context.query.beanieBabyId);
-
+  // const currentCart = JSON.parse(context.req.cookies.cart || '[]');
   return {
     props: {
       beanieBaby: beanieBaby || {},

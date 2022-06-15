@@ -20,7 +20,7 @@ const headerStyles = css`
     #e7484f 100%
   );
   padding: 10px 10px;
-  margin: 0px 10px 30px 30px;
+  margin: 0px 30px 30px 30px;
   color: black;
   display: flex;
   justify-content: space-between;
@@ -29,18 +29,16 @@ const headerStyles = css`
 
   > div :nth-child(2) {
     display: flex;
-    width: 300px;
+    width: 330px;
     margin-right: 330px;
   }
-  > div > div > a {
+  > a {
     text-decoration: none;
     color: black;
     font-weight: bold;
     font-size: 16px;
-    padding: 40px;
-    width: 130px;
-    display: flex;
-    align-items: center;
+    margin: 65px;
+    width: fit-content;
   }
   > div > div {
     width: 130px;
@@ -82,7 +80,16 @@ const heartStyles = css`
 `;
 
 export default function Header(props) {
-  const cartTotal = props.cartTotal;
+  // const cartState = props.cartState;
+
+  // const cartTotal = cartState.reduce((acc, cartItem) => {
+  //   return acc + cartItem.cartCounter;
+  // });
+
+  const totalItemsInCart = props.cartState.reduce(function (acc, current) {
+    return acc + current.cartCounter;
+  }, 0);
+
   return (
     <div>
       <header css={headerStyles}>
@@ -90,25 +97,24 @@ export default function Header(props) {
           <span css={heartStyles}></span>
           {/* <i className="fa-solid fa-heart" /> */}
         </div>
-        <div>
-          <div>
-            <Link href="/">Home</Link>
-          </div>
-          <div>
-            <Link data-test-id="products-link" href="/products">
-              Beanie Babies
-            </Link>
-          </div>
-          <div>
-            <a href="/cart" data-test-id="cart-link">
-              <span>
-                <i className="fa-solid fa-basket-shopping"></i>
-                <span data-test-id="cart-count">{cartTotal}</span>
-                {console.log('pageProps.cartTotal', props.cartTotal)}
-              </span>
-            </a>
-          </div>
-        </div>
+        {/* <div>
+          <div> */}
+        <Link href="/">Home</Link>
+        {/* </div>
+          <div> */}
+        <Link data-test-id="products-link" href="/products">
+          Beanie Babies
+        </Link>
+        {/* </div>
+          <div> */}
+        <a href="/cart" data-test-id="cart-link">
+          <span>
+            <i className="fa-solid fa-basket-shopping"></i>
+            <span data-test-id="cart-count"> {totalItemsInCart} </span>
+          </span>
+        </a>
+        {/* </div>
+        </div> */}
       </header>
     </div>
   );

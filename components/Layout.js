@@ -4,9 +4,9 @@ import Header from './Header';
 export default function Layout(props) {
   return (
     <div>
-      <Header {...props} />
+      <Header cartState={props.cartState} setCartState={props.setCartState} />
       {props.children}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
