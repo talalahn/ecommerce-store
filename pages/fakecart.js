@@ -221,13 +221,11 @@ export default function Cart(props) {
               </tr>
             </thead>
             <tfoot>
-              <tr>
-                <td>Total</td>
-                <td></td>
-                <td></td>
-                <td data-test-id="cart-total">{sum}</td>
-                <td></td>
-              </tr>
+              <th>Total</th>
+              <th></th>
+              <th></th>
+              <th data-test-id="cart-total">{sum}</th>
+              <th></th>
             </tfoot>
             <tbody>
               {beanieCart.map((cartItem) => {

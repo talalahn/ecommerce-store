@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
-import { getParsedCookies, setStringifiedCookies } from '../util/cookies';
+import { getParsedCookies } from '../util/cookies';
 
 const cookieBannerStyles = (isOpen) => css`
   height: ${isOpen ? '50px' : 0};
@@ -13,23 +13,23 @@ const cookieBannerStyles = (isOpen) => css`
 `;
 
 function MyApp({ Component, pageProps }) {
-  const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
+  // const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
   const [cartState, setCartState] = useState([]);
 
-  function cookieBannerButtonHandler() {
-    // 2. set the value for the cookie banner
-    window.localStorage.setItem('areCookiesAccepted', JSON.stringify(true));
-    setAreCookiesAccepted(true);
-  }
+  // function cookieBannerButtonHandler() {
+  //   // 2. set the value for the cookie banner
+  //   window.localStorage.setItem('areCookiesAccepted', JSON.stringify(true));
+  //   setAreCookiesAccepted(true);
+  // }
 
-  useEffect(() => {
-    // 1. is there a value for the cookie banner?
-    if (window.localStorage.getItem('areCookiesAccepted')) {
-      setAreCookiesAccepted(
-        JSON.stringify(window.localStorage.getItem('areCookiesAccepted')),
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   // 1. is there a value for the cookie banner?
+  //   if (window.localStorage.getItem('areCookiesAccepted')) {
+  //     setAreCookiesAccepted(
+  //       JSON.stringify(window.localStorage.getItem('areCookiesAccepted')),
+  //     );
+  //   }
+  // }, []);
 
   useEffect(() => {
     const currentCart = Cookies.get('cart') ? getParsedCookies('cart') : [];
@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }) {
           }
         `}
       />
-      <div css={cookieBannerStyles(!areCookiesAccepted)}>
+      {/* <div css={cookieBannerStyles(!areCookiesAccepted)}>
         Accept Cookies
         <button
           onClick={() => {
@@ -72,7 +72,7 @@ function MyApp({ Component, pageProps }) {
         >
           Yes
         </button>
-      </div>
+      </div> */}
 
       <Layout cartState={cartState} setCartState={setCartState}>
         <Component
