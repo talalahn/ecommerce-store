@@ -9,28 +9,6 @@ const titleHeadingStyles = css`
 
 const mainContentStyles = css`
   margin: 10px;
-  /* background-image: url('/../public/groupBeanies.jpg'); */
-
-  /* > div {
-    color: grey;
-    font-size: 20px;
-    border-radius: 50%;
-    width: 300px;
-    height: 300px;
-    text-justify: center;
-    text-align: center;
-    border: 2px grey solid;
-    justify-items: center;
-    display: block;
-    margin: auto;
-  }
-  > div > h2 {
-    padding-top: 100px;
-  }
-
-  > div > h2 > a {
-    text-decoration: none;
-  } */
 `;
 const animalIconStyles = css`
   /* background-color: #d3d3d3; */

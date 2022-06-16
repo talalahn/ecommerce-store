@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getBeanieBabies } from '../util/database';
 
@@ -6,25 +7,52 @@ const headingTextStyles = css`
   margin: 0 auto;
   text-align: center;
 `;
-const beanieBabyListStyles = css`
-  background-color: #d3d3d3;
-  border: 2px solid #828282;
-  /* padding: 10px; */
+const titleHeadingStyles = css`
+  text-align: center;
+  padding-bottom: 10px; ;
+`;
+
+const mainContentStyles = css`
+  margin: 10px;
+  /* position: absolute; */
+`;
+const animalIconStyles = css`
   display: flex;
   flex-wrap: wrap;
-  margin: 16px 0;
-  border-radius: 4px;
   height: 100vh;
-  align-items: stretch;
-  background-color: #d3d3d3;
-  border: 2px solid #828282;
-  padding: 10px;
-  margin: 16px 0;
+  /* margin: 16px 0; */
   border-radius: 20px;
-  /* gap: 5px; */
+
+  > div {
+    background-color: #d3d3d3;
+    align-content: center;
+    justify-items: center;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  > div :nth-child(1) {
+    background-color: #fced00;
+    border-top-left-radius: 20px;
+  }
+  > div :nth-child(2) {
+    background-color: #009e4f;
+    border-top-right-radius: 20px;
+  }
+  > div :nth-child(3) {
+    background-color: #f68b1d;
+    border-bottom-left-radius: 20px;
+  }
+  > div :nth-child(4) {
+    background-color: #00aac3;
+    border-bottom-right-radius: 20px;
+  }
 `;
+
 const singleProductStyles = css`
-  background-color: #d3d3d3;
   align-content: center;
   justify-items: center;
   width: 50%;
@@ -42,38 +70,37 @@ const singleProductStyles = css`
     text-decoration: none;
     color: inherit;
   }
-  #beaniebaby-1 {
-    background-color: black;
-  }
 `;
 
 export default function BeanieBaby(props) {
   return (
     <div>
-      <h1 css={headingTextStyles}>The Beanies:</h1>
-      <div css={beanieBabyListStyles}>
-        <main />
-
-        {props.beanieBabies.map((beanieBaby) => {
-          return (
-            <>
-              <Link
-                data-test-id="product-<beanieBaby.id>"
-                href={`./products/${beanieBaby.id}`}
-              >
-                <div
-                  key={`beaniebaby-${beanieBaby.id}`}
-                  id={`beaniebaby-${beanieBaby.id}`}
-                  css={singleProductStyles}
-                >
-                  <h2>{beanieBaby.name}</h2>
-                  <h3>Color: {beanieBaby.color}</h3>
-                  <h3>Price: {beanieBaby.price}€</h3>
-                </div>
-              </Link>
-            </>
-          );
-        })}
+      <h1 css={titleHeadingStyles}>The Beanies</h1>
+      <div>
+        <main css={mainContentStyles}>
+          <div css={animalIconStyles}>
+            {props.beanieBabies.map((beanieBaby) => {
+              return (
+                <>
+                  <Link
+                    data-test-id="product-<beanieBaby.id>"
+                    href={`./products/${beanieBaby.id}`}
+                  >
+                    <div
+                      key={`beaniebaby-${beanieBaby.id}`}
+                      id={`beaniebaby-${beanieBaby.id}`}
+                      css={singleProductStyles}
+                    >
+                      <h2>{beanieBaby.name}</h2>
+                      <h3>Color: {beanieBaby.color}</h3>
+                      <h3>Price: {beanieBaby.price}€</h3>
+                    </div>
+                  </Link>
+                </>
+              );
+            })}
+          </div>
+        </main>
       </div>
       <footer />
     </div>

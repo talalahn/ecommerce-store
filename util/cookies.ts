@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 
-export function getParsedCookies(key) {
+export function getParsedCookies(key: string) {
   const cookieValue = Cookies.get(key); // type is string | undefined
   if (!cookieValue) {
     return [];
@@ -13,6 +13,11 @@ export function getParsedCookies(key) {
   }
 }
 
-export function setStringifiedCookies(key, value) {
+type CartItem = {
+  id: number;
+  cartCounter: number;
+};
+
+export function setStringifiedCookies(key: string, value: CartItem[]) {
   Cookies.set(key, JSON.stringify(value));
 }

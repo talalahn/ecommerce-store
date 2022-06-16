@@ -1,34 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Buy a Beanie Baby E-Commerce Store
 
-## Getting Started
+## Description
 
-First, run the development server:
+The Buy a Beanie Baby e-commerce store is a made-up store in which vintage beanie babies can be purchased. In reality, nothing can actually be purchased from this store.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Functionalities
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This next.js-project includes the following functionalities:
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- a landing page
+- a products page with all available products
+- a page for each product with more information about the product
+- the ability to add a desired amount of items into the cart
+- a header cart symbol which displays how many items are currently in the cart
+  cart page
+- a cart page which displays all the products in the cart, their quantity, price, subtotal price, and total price with the possibility to adjust the quantity of each item or even remove it from the cart
+- a checkout page
+- a thank you page
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## List of technologies used
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Next.js
+- React.js
+- Postgres.js
+- Emotion (CSS-in-JS)
+  <!-- - Jest (Unit tests) -->
+  <!-- - Playwright (E2E tests) -->
+- Typescript
+- GitHub Actions
 
-## Learn More
+## Setup instructions
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository with git clone <repo>
+2. Setup the database by downloading and installing PostgreSQL
+3. Create a user and a database
+4. Create a new .env file
+5. Copy the environment variables from .env-example into .env
+6. Replace the placeholders xxxxx with your username, password and name of database
+7. Install dotenv-cli with "yarn add dotenv-cli"
+8. Run "yarn install" in your command line
+9. Run the migrations with "yarn migrate up"
+10. Start the server by running "yarn dev"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy on Heroku
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Sign up at Heroku: https://www.heroku.com/.
+2. Create a new App
+3. Choose a name and select the "Europe" Region
+4. Click "Connect to GitHub"
+5. Search for your repository and click on "Connect". Click on "Enable Automatic Deploys"
+6. Go to the Overview tab and click "Configure Add-On"
+7. Search for "Postgres" and select "Heroku Postgres"
+8. Trigger a deploy by pushing your repo to GitHub
