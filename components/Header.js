@@ -27,24 +27,34 @@ const headerStyles = css`
   align-items: center;
   height: 60px;
 
-  > div :nth-child(2) {
+  /* > div :nth-child(3) {
     display: flex;
     width: 330px;
     margin-right: 330px;
-  }
+  } */
+
+  /* > div :nth-child(2) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  } */
   > a {
     text-decoration: none;
     color: black;
     font-weight: bold;
     font-size: 16px;
-    margin: 65px;
     width: fit-content;
+    padding: 10px;
+    border: 1px black solid;
+    font-size: 20px;
+    border-radius: 10px;
+    box-shadow: 4px 4px;
   }
-  > div > div {
+  /* > div > div {
     width: 130px;
     display: flex;
     align-items: center;
-  }
+  } */
 `;
 
 const heartStyles = css`
@@ -90,6 +100,7 @@ export default function Header(props) {
         <div>
           <span css={heartStyles}></span>
         </div>
+
         <Link href="/">Home</Link>
         <Link data-test-id="products-link" href="/products">
           Beanie Babies
