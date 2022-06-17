@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie';
-import { BeanieBabyInCart } from '../pages/products/[beanieBabyId]';
 
-export function getParsedCookies(key: string) {
+export function getParsedCookies(key) {
   const cookieValue = Cookies.get(key); // type is string | undefined
   if (!cookieValue) {
     return [];
@@ -14,6 +13,6 @@ export function getParsedCookies(key: string) {
   }
 }
 
-export function setStringifiedCookies(key: string, value: BeanieBabyInCart[]) {
+export function setStringifiedCookies(key, value) {
   Cookies.set(key, JSON.stringify(value));
 }
