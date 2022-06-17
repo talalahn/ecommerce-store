@@ -293,6 +293,7 @@ export default function Cart(props) {
                         {cartItem.cartCounter}
                       </span>
                       <button
+                        data-test-id="increase-button"
                         css={buttonSimpleStyles}
                         onClick={() => {
                           const newCartCounter = cartItem.cartCounter + 1;

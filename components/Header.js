@@ -80,12 +80,6 @@ const heartStyles = css`
 `;
 
 export default function Header(props) {
-  // const cartState = props.cartState;
-
-  // const cartTotal = cartState.reduce((acc, cartItem) => {
-  //   return acc + cartItem.cartCounter;
-  // });
-
   const totalItemsInCart = props.cartState.reduce(function (acc, current) {
     return acc + current.cartCounter;
   }, 0);
@@ -95,26 +89,17 @@ export default function Header(props) {
       <header css={headerStyles}>
         <div>
           <span css={heartStyles}></span>
-          {/* <i className="fa-solid fa-heart" /> */}
         </div>
-        {/* <div>
-          <div> */}
         <Link href="/">Home</Link>
-        {/* </div>
-          <div> */}
         <Link data-test-id="products-link" href="/products">
           Beanie Babies
         </Link>
-        {/* </div>
-          <div> */}
         <a href="/cart" data-test-id="cart-link">
           <span>
             <i className="fa-solid fa-basket-shopping"></i>
             <span data-test-id="cart-count"> {totalItemsInCart} </span>
           </span>
         </a>
-        {/* </div>
-        </div> */}
       </header>
     </div>
   );

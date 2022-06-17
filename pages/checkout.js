@@ -1,5 +1,11 @@
 import { css } from '@emotion/react';
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { setStringifiedCookies } from '../util/cookies';
+import { getBeanieBabies } from '../util/database';
+import { Props } from './products';
 
 const beanieBabyInfoBox = css`
   background-color: #d3d3d3;
@@ -157,7 +163,15 @@ const buttonsStyles = css`
   }
 `;
 
-export default function Checkout() {
+export default function Checkout(props) {
+  const router = useRouter();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    router.push('/thank_you').catch(() => {});
+    setStringifiedCookies('cart', []);
+    props.setCartState([]);
+  };
+
   return (
     <div>
       <div css={beanieBabyInfoBox}>
@@ -169,10 +183,10 @@ export default function Checkout() {
           </Link>
         </div>
         <h1>Checkout</h1>
-        <form css={formStyles}>
+        <form css={formStyles} onSubmit={handleSubmit}>
           <div>
             <div>
-              <label for="checkout-first-name">First Name:</label>
+              <label htmlFor="checkout-first-name">First Name:</label>
               <input
                 id="checkout-first-name"
                 data-test-id="checkout-first-name"
@@ -181,7 +195,7 @@ export default function Checkout() {
                 placeholder="Hans"
               />
               <div></div>
-              <label for="checkout-last-name">Last Name:</label>
+              <label htmlFor="checkout-last-name">Last Name:</label>
               <input
                 data-test-id="checkout-last-name"
                 id="checkout-last-name"
@@ -191,7 +205,7 @@ export default function Checkout() {
               />
             </div>
             <div>
-              <label for="checkout-email">Email:</label>
+              <label htmlFor="checkout-email">Email:</label>
               <input
                 id="checkout-email"
                 data-test-id="checkout-email"
@@ -201,7 +215,7 @@ export default function Checkout() {
               />
             </div>
             <div>
-              <label for="checkout-address">Address:</label>
+              <label htmlFor="checkout-address">Address:</label>
               <input
                 id="checkout-address"
                 data-test-id="checkout-address"
@@ -212,7 +226,7 @@ export default function Checkout() {
             </div>
 
             <div>
-              <label for="checkout-city">City:</label>
+              <label htmlFor="checkout-city">City:</label>
               <input
                 id="checkout-city"
                 data-test-id="checkout-city"
@@ -222,7 +236,7 @@ export default function Checkout() {
               />
             </div>
             <div>
-              <label for="checkout-postal-code">Postal Code:</label>
+              <label htmlFor="checkout-postal-code">Postal Code:</label>
               <input
                 id="checkout-postal-code"
                 data-test-id="checkout-postal-code"
@@ -232,7 +246,7 @@ export default function Checkout() {
               />
             </div>
             <div>
-              <label for="checkout-country">Country:</label>
+              <label htmlFor="checkout-country">Country:</label>
               <input
                 id="checkout-country"
                 data-test-id="checkout-country"
@@ -242,7 +256,7 @@ export default function Checkout() {
               />
             </div>
             <div>
-              <label for="checkout-credit-card">Credit Card:</label>
+              <label htmlFor="checkout-credit-card">Credit Card:</label>
               <input
                 id="checkout-credit-card"
                 data-test-id="checkout-credit-card"
@@ -253,7 +267,7 @@ export default function Checkout() {
             </div>
 
             <div>
-              <label for="checkout-expiration-date">Expiration Date:</label>
+              <label htmlFor="checkout-expiration-date">Expiration Date:</label>
               <input
                 id="checkout-expiration-date"
                 data-test-id="checkout-expiration-date"
@@ -263,7 +277,7 @@ export default function Checkout() {
               />
             </div>
             <div>
-              <label for="checkout-security-code">Security Code:</label>
+              <label htmlFor="checkout-security-code">Security Code:</label>
               <input
                 id="checkout-security-code"
                 data-test-id="checkout-security-code"
@@ -282,4 +296,35 @@ export default function Checkout() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  // cart cookie
+  //   const currentCart = JSON.parse(context.req.cookies.cart || '[]');
+
+  //   return { props: { currentCart } };
+  // }
+  const currentCart = JSON.parse(context.req.cookies.cart || '[]');
+
+  const allBeanies = await getBeanieBabies();
+  const foundBeanies = [];
+
+  for (const beanie of currentCart) {
+    const beanieData = allBeanies.find((beanieItem) => {
+      return beanieItem.id === beanie.id;
+    });
+    if (!beanieData) {
+      context.res.statusCode = 404;
+    }
+
+    const superBeanie = { ...beanieData, ...beanie };
+
+    foundBeanies.push(superBeanie);
+  }
+
+  return {
+    props: {
+      foundBeanies,
+    },
+  };
 }

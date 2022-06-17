@@ -62,9 +62,9 @@ const beanieBabyTakeMeBackLink = css`
 `;
 
 const beanieBabyInfoPic = css`
-  border-radius: 50%;
-  /* filter: grayscale(); */
   margin: 0 auto;
+  border-radius: 50%;
+  border: 10px white solid;
 `;
 
 const buttonsStyles = css`
@@ -137,17 +137,7 @@ const buttonsStyles = css`
 `;
 
 export default function BeanieBaby(props) {
-  // check if the beanie baby is inside the diet by checking the property cartCounter
-
-  // initialize the cartCounter with the value of the cookie or 0
-
-  // const cartTotal = cartState.reduce((acc, cartItem) => {
-  //   return acc + cartItem.cartCounter;
-  // }, 0);
-
   const [beanieAmount, setBeanieAmount] = useState(1);
-
-  // const cartCounter = props.beanieBaby.cartCounter || 0;
 
   if (!props.beanieBaby.price) {
     return (
@@ -158,7 +148,6 @@ export default function BeanieBaby(props) {
           <Link href="/products">
             <div>
               <i className="fa-solid fa-backward" /> Take Me Back{'  '}
-              {/* <i className="fa-solid fa-backward" /> */}
             </div>
           </Link>
         </div>
@@ -172,19 +161,19 @@ export default function BeanieBaby(props) {
           <Link href="/products">
             <div>
               <i className="fa-solid fa-backward" /> Take Me Back{'  '}
-              {/* <i className="fa-solid fa-backward" /> */}
             </div>
           </Link>
         </div>
         <h1>{props.beanieBaby.name}</h1>
-        <h2>Animal: {props.beanieBaby.animal}</h2>
-        <div>
+        <h2>The {props.beanieBaby.animal}</h2>
+        <h3>Birthday: {props.beanieBaby.birthday}</h3>
+        <div css={beanieBabyInfoPic}>
           <Image
             css={beanieBabyInfoPic}
             src={`/${props.beanieBaby.id}.jpeg`}
             alt={`beanie baby ${props.beanieBaby.name}`}
-            width="500"
-            height="500"
+            width="302"
+            height="403"
             data-test-id="product-image"
           />
         </div>
@@ -238,6 +227,7 @@ export default function BeanieBaby(props) {
                     cartCounter: beanieAmount,
                   },
                 ];
+                console.log(newCart);
                 setStringifiedCookies('cart', currentCart);
                 props.setCartState(newCart);
               } else {
@@ -254,8 +244,6 @@ export default function BeanieBaby(props) {
             Add to Beanie Basket
           </button>
           <br />
-          Total In Cart:
-          {/* {cartTotal} */}
           <Link href="/cart">
             <button>Beanie Basket</button>
           </Link>
@@ -266,7 +254,6 @@ export default function BeanieBaby(props) {
 }
 export async function getServerSideProps(context) {
   const beanieBaby = await getBeanieBaby(context.query.beanieBabyId);
-  // const currentCart = JSON.parse(context.req.cookies.cart || '[]');
   return {
     props: {
       beanieBaby: beanieBaby || {},

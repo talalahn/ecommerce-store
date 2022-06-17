@@ -13,8 +13,9 @@ const cookieBannerStyles = (isOpen) => css`
 `;
 
 function MyApp({ Component, pageProps }) {
-  // const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
   const [cartState, setCartState] = useState([]);
+
+  // const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
 
   // function cookieBannerButtonHandler() {
   //   // 2. set the value for the cookie banner
@@ -80,6 +81,7 @@ function MyApp({ Component, pageProps }) {
           cartState={cartState}
           setCartState={setCartState}
         />
+        {console.log('cartState for props', cartState)}
       </Layout>
     </>
   );

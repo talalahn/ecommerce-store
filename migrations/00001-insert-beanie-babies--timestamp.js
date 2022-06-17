@@ -7,34 +7,38 @@
 const beanieBabyDatabase = [
   {
     id: 1,
-    name: 'Tabasco',
-    animal: 'Bull',
+    name: 'The Beginning',
+    animal: 'Bear',
+    birthday: '01.01.00',
     price: '1500',
   },
   {
     id: 2,
-    name: 'Fluff',
-    animal: 'Sheep',
-    price: '1200',
+    name: 'Tiny',
+    animal: 'Dog',
+    birthday: '08.09.98',
+    price: '600',
   },
   {
     id: 3,
-    name: 'Oink',
-    animal: 'Pig',
-    price: '800',
+    name: 'Schweetheart',
+    animal: 'Monkey',
+    birthday: '23.01.99',
+    price: '1000',
   },
   {
     id: 4,
-    name: 'Honey',
-    animal: 'Bee',
-    price: '600',
+    name: 'Springy',
+    animal: 'Rabbit',
+    birthday: '29.02.00',
+    price: '800',
   },
 ];
 
 exports.up = async (sql) => {
   await sql`
 		INSERT INTO
-			beanie_babies ${sql(beanieBabyDatabase, 'name', 'animal', 'price')}
+			beanie_babies ${sql(beanieBabyDatabase, 'name', 'animal', 'birthday', 'price')}
 	`;
 };
 
@@ -46,6 +50,7 @@ exports.down = async (sql) => {
 		WHERE
 			name = ${beanieBabyData.name} AND
 			animal = ${beanieBabyData.animal} AND
+      birthday = ${beanieBabyData.birthday} AND
 			price = ${beanieBabyData.price}
 	`;
   }
