@@ -54,16 +54,16 @@ export default function Home() {
         <Link href="/products">
           <div css={animalIconStyles}>
             <div>
-              <Image src="/../public/bear.png" width={400} height={400} />
+              <Image src="/bear.png" width={400} height={400} />
             </div>
             <div>
-              <Image src="/../public/dog.png" width={400} height={400} />
+              <Image src="/dog.png" width={400} height={400} />
             </div>
             <div>
-              <Image src="/../public/monkey.png" width={400} height={400} />
+              <Image src="/monkey.png" width={400} height={400} />
             </div>
             <div>
-              <Image src="/../public/rabbit.png" width={400} height={400} />
+              <Image src="/rabbit.png" width={400} height={400} />
             </div>
           </div>
         </Link>
