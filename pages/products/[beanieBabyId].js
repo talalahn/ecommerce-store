@@ -256,6 +256,7 @@ export async function getServerSideProps(context) {
   const beanieBaby = await getBeanieBaby(context.query.beanieBabyId);
   return {
     props: {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       beanieBaby: beanieBaby || {},
     },
   };

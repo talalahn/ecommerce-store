@@ -223,10 +223,10 @@ export default function Cart(props) {
             <tfoot>
               <tr>
                 <td>Total</td>
-                <td></td>
-                <td></td>
+                <td />
+                <td />
                 <td data-test-id="cart-total">{sum}</td>
-                <td></td>
+                <td />
               </tr>
             </tfoot>
             <tbody>
@@ -277,14 +277,14 @@ export default function Cart(props) {
                           const currentBeanie = currentCart.find(
                             (beanieInCart) => cartItem.id === beanieInCart.id,
                           );
+                          // eslint-disable-next-line no-unused-expressions
                           currentBeanie.cartCounter > 1
                             ? (currentBeanie.cartCounter -= 1)
-                            : (currentBeanie.cartCounter = 1),
-                            setStringifiedCookies('cart', currentCart);
+                            : (currentBeanie.cartCounter = 1);
+                          setStringifiedCookies('cart', currentCart);
                           props.setCartState(updatedArray);
                         }}
                       >
-                        {' '}
                         -
                       </button>
                       <span
@@ -342,7 +342,7 @@ export default function Cart(props) {
                           setStringifiedCookies('cart', updatedCart);
                         }}
                       >
-                        <i className="fa-solid fa-trash-can"></i>
+                        <i className="fa-solid fa-trash-can" />
                       </button>
                     </td>
                   </tr>

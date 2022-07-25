@@ -11,21 +11,13 @@ const mainContentStyles = css`
   margin: 10px;
 `;
 const animalIconStyles = css`
-  /* background-color: #d3d3d3; */
-  /* border: 2px solid #828282; */
-  /* padding: 10px; */
   display: flex;
   flex-wrap: wrap;
   margin: 16px 0;
-  /* border-radius: 4px; */
   height: 100vh;
-  /* align-items: stretch; */
-  /* background-color: #d3d3d3; */
-  /* border: 2px solid #828282; */
-  /* padding: 10px; */
+
   margin: 16px 0;
   border-radius: 20px;
-  /* gap: 5px; */
   > div {
     background-color: #d3d3d3;
     align-content: center;

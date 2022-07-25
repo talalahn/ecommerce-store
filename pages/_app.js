@@ -6,31 +6,8 @@ import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import { getParsedCookies } from '../util/cookies';
 
-const cookieBannerStyles = (isOpen) => css`
-  height: ${isOpen ? '50px' : 0};
-  overflow: hidden;
-  transition: all ease-in 200ms;
-`;
-
 function MyApp({ Component, pageProps }) {
   const [cartState, setCartState] = useState([]);
-
-  // const [areCookiesAccepted, setAreCookiesAccepted] = useState(false);
-
-  // function cookieBannerButtonHandler() {
-  //   // 2. set the value for the cookie banner
-  //   window.localStorage.setItem('areCookiesAccepted', JSON.stringify(true));
-  //   setAreCookiesAccepted(true);
-  // }
-
-  // useEffect(() => {
-  //   // 1. is there a value for the cookie banner?
-  //   if (window.localStorage.getItem('areCookiesAccepted')) {
-  //     setAreCookiesAccepted(
-  //       JSON.stringify(window.localStorage.getItem('areCookiesAccepted')),
-  //     );
-  //   }
-  // }, []);
 
   useEffect(() => {
     const currentCart = Cookies.get('cart') ? getParsedCookies('cart') : [];
@@ -63,17 +40,6 @@ function MyApp({ Component, pageProps }) {
           }
         `}
       />
-      {/* <div css={cookieBannerStyles(!areCookiesAccepted)}>
-        Accept Cookies
-        <button
-          onClick={() => {
-            setAreCookiesAccepted(true);
-            cookieBannerButtonHandler();
-          }}
-        >
-          Yes
-        </button>
-      </div> */}
 
       <Layout cartState={cartState} setCartState={setCartState}>
         <Component

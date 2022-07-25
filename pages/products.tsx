@@ -1,12 +1,7 @@
 import { css } from '@emotion/react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { getBeanieBabies } from '../util/database';
 
-const headingTextStyles = css`
-  margin: 0 auto;
-  text-align: center;
-`;
 const titleHeadingStyles = css`
   text-align: center;
   padding-bottom: 10px; ;
@@ -14,13 +9,11 @@ const titleHeadingStyles = css`
 
 const mainContentStyles = css`
   margin: 10px;
-  /* position: absolute; */
 `;
 const animalIconStyles = css`
   display: flex;
   flex-wrap: wrap;
   height: 100vh;
-  /* margin: 16px 0; */
   border-radius: 20px;
 
   > div {
@@ -78,13 +71,13 @@ export type BeanieBabyInCart = {
 };
 
 export type Props = {
-  beanieBaby: {
-    id: number;
-    name: string;
-    animal: string;
-    price: number;
-    cartCounter: number;
-  };
+  // beanieBaby: {
+  //   id: number;
+  //   name: string;
+  //   animal: string;
+  //   price: number;
+  //   cartCounter: number;
+  // };
   beanieBabies: {
     id: number;
     name: string;
@@ -102,22 +95,21 @@ export default function BeanieBaby(props: Props) {
           <div css={animalIconStyles}>
             {props.beanieBabies.map((beanieBaby) => {
               return (
-                <>
-                  <Link
-                    data-test-id="product-<beanieBaby.id>"
-                    href={`./products/${beanieBaby.id}`}
+                <Link
+                  key={beanieBaby.id}
+                  data-test-id="product-<beanieBaby.id>"
+                  href={`./products/${beanieBaby.id}`}
+                >
+                  <div
+                    key={`beaniebaby-${beanieBaby.id}`}
+                    id={`beaniebaby-${beanieBaby.id}`}
+                    css={singleProductStyles}
                   >
-                    <div
-                      key={`beaniebaby-${beanieBaby.id}`}
-                      id={`beaniebaby-${beanieBaby.id}`}
-                      css={singleProductStyles}
-                    >
-                      <h2>{beanieBaby.name}</h2>
-                      <h3>Animal: {beanieBaby.animal}</h3>
-                      <h3>Price: {beanieBaby.price}€</h3>
-                    </div>
-                  </Link>
-                </>
+                    <h2>{beanieBaby.name}</h2>
+                    <h3>Animal: {beanieBaby.animal}</h3>
+                    <h3>Price: {beanieBaby.price}€</h3>
+                  </div>
+                </Link>
               );
             })}
           </div>
