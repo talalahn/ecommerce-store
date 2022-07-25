@@ -1,11 +1,8 @@
 import { css } from '@emotion/react';
-import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { setStringifiedCookies } from '../util/cookies';
 import { getBeanieBabies } from '../util/database';
-import { Props } from './products';
 
 const beanieBabyInfoBox = css`
   background-color: #d3d3d3;
@@ -190,16 +187,14 @@ export default function Checkout(props) {
               <input
                 id="checkout-first-name"
                 data-test-id="checkout-first-name"
-                type="text"
                 required
                 placeholder="Hans"
               />
-              <div></div>
+              <div />
               <label htmlFor="checkout-last-name">Last Name:</label>
               <input
                 data-test-id="checkout-last-name"
                 id="checkout-last-name"
-                type="text"
                 required
                 placeholder="Schwarzenegger"
               />
@@ -209,7 +204,6 @@ export default function Checkout(props) {
               <input
                 id="checkout-email"
                 data-test-id="checkout-email"
-                type="text"
                 required
                 placeholder="h.schwarzenegger@yahoo.com"
               />
@@ -219,7 +213,6 @@ export default function Checkout(props) {
               <input
                 id="checkout-address"
                 data-test-id="checkout-address"
-                type="text"
                 required
                 placeholder="Jungstrasse 27/3/25"
               />
@@ -230,7 +223,6 @@ export default function Checkout(props) {
               <input
                 id="checkout-city"
                 data-test-id="checkout-city"
-                type="text"
                 required
                 placeholder="Vienna"
               />
@@ -240,7 +232,6 @@ export default function Checkout(props) {
               <input
                 id="checkout-postal-code"
                 data-test-id="checkout-postal-code"
-                type="text"
                 required
                 placeholder="1020"
               />
@@ -250,7 +241,6 @@ export default function Checkout(props) {
               <input
                 id="checkout-country"
                 data-test-id="checkout-country"
-                type="text"
                 required
                 placeholder="Austria"
               />
@@ -260,7 +250,6 @@ export default function Checkout(props) {
               <input
                 id="checkout-credit-card"
                 data-test-id="checkout-credit-card"
-                type="text"
                 required
                 placeholder="xxxx xxxx xxxx xxxx"
               />
@@ -271,7 +260,6 @@ export default function Checkout(props) {
               <input
                 id="checkout-expiration-date"
                 data-test-id="checkout-expiration-date"
-                type="text"
                 required
                 placeholder="09/23"
               />
@@ -281,16 +269,13 @@ export default function Checkout(props) {
               <input
                 id="checkout-security-code"
                 data-test-id="checkout-security-code"
-                type="text"
                 required
                 placeholder="123"
               />
             </div>
           </div>
           <div css={buttonsStyles}>
-            <button type="submit" data-test-id="checkout-confirm-order">
-              Submit
-            </button>
+            <button data-test-id="checkout-confirm-order">Submit</button>
           </div>
         </form>
       </div>

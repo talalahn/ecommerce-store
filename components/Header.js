@@ -27,17 +27,6 @@ const headerStyles = css`
   align-items: center;
   height: 60px;
 
-  /* > div :nth-child(3) {
-    display: flex;
-    width: 330px;
-    margin-right: 330px;
-  } */
-
-  /* > div :nth-child(2) {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  } */
   > a {
     text-decoration: none;
     color: black;
@@ -50,11 +39,6 @@ const headerStyles = css`
     border-radius: 10px;
     box-shadow: 4px 4px;
   }
-  /* > div > div {
-    width: 130px;
-    display: flex;
-    align-items: center;
-  } */
 `;
 
 const heartStyles = css`
@@ -98,19 +82,19 @@ export default function Header(props) {
     <div>
       <header css={headerStyles}>
         <div>
-          <span css={heartStyles}></span>
+          <span css={heartStyles} />
         </div>
 
         <Link href="/">Home</Link>
         <Link data-test-id="products-link" href="/products">
           Beanie Babies
         </Link>
-        <a href="/cart" data-test-id="cart-link">
+        <Link href="/cart" data-test-id="cart-link">
           <span>
-            <i className="fa-solid fa-basket-shopping"></i>
+            <i className="fa-solid fa-basket-shopping" />
             <span data-test-id="cart-count"> {totalItemsInCart} </span>
           </span>
-        </a>
+        </Link>
       </header>
     </div>
   );
