@@ -22,7 +22,7 @@ This next.js-project includes the following functionalities:
 
 - Next.js
 - React.js
-- Postgres.js
+- PostgreSQL
 - Emotion (CSS-in-JS)
   <!-- - Jest (Unit tests) -->
   <!-- - Playwright (E2E tests) -->
