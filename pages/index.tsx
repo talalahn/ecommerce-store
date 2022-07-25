@@ -29,19 +29,19 @@ const animalIconStyles = css`
     align-items: center;
   }
 
-  > div :nth-child(1) {
+  > div :nth-of-type(1) {
     background-color: #fced00;
     border-top-left-radius: 20px;
   }
-  > div :nth-child(2) {
+  > div :nth-of-type(2) {
     background-color: #009e4f;
     border-top-right-radius: 20px;
   }
-  > div :nth-child(3) {
+  > div :nth-of-type(3) {
     background-color: #f68b1d;
     border-bottom-left-radius: 20px;
   }
-  > div :nth-child(4) {
+  > div :nth-of-type(4) {
     background-color: #00aac3;
     border-bottom-right-radius: 20px;
   }
