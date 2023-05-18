@@ -14,10 +14,6 @@ function MyApp({ Component, pageProps }) {
     setCartState(currentCart);
   }, []);
 
-  // useEffect(() => {
-  //   setStringifiedCookies('cart', cartState);
-  // }, [cartState]);
-
   return (
     <>
       <Head>
@@ -47,7 +43,6 @@ function MyApp({ Component, pageProps }) {
           cartState={cartState}
           setCartState={setCartState}
         />
-        {console.log('cartState for props', cartState)}
       </Layout>
     </>
   );
